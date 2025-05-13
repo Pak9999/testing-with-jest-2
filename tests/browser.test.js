@@ -34,3 +34,38 @@ describe('Clicking "Pusha till stacken"', () => {
         await alert.accept();
     });
 });
+
+// mitt test
+describe('Clicking "Poppa stacken!"', () => {
+    it('should remove the top element and show an alert', async () => {
+        try {
+            console.log('Running test: pop button functionality');
+            
+            // First så lägger vi till ett värde i stacken för att säkerställa att det finns något att poppa
+            let push = await driver.findElement(By.id('push'));
+            await push.click();
+            let pushAlert = await driver.switchTo().alert();
+            await pushAlert.sendKeys("Äpple");
+            await pushAlert.accept();
+            
+            // Kolla att stacken innehåller det värde vi just lagt till
+            let stackBefore = await driver.findElement(By.id('top_of_stack')).getText();
+            expect(stackBefore).toEqual("Äpple");
+            
+            // Nu ska vi poppa stacken
+            let pop = await driver.findElement(By.id('pop'));
+            await pop.click();
+            
+            // kolla att alerten dyker upp och att den innehåller rätt text
+            let popAlert = await driver.switchTo().alert();
+            let alertText = await popAlert.getText();
+            expect(alertText).toContain("Tog bort Äpple");
+            await popAlert.accept();              // Stacken uppdateras inte automatiskt efter pop, så den visar fortfarande det senaste pushade värdet
+            let stackAfter = await driver.findElement(By.id('top_of_stack')).getText();
+            expect(stackAfter).toEqual("Bananer");  // Medvetet fel värde för att göra att testet misslyckas
+        } catch (error) {
+            console.error('Error during "pop button" test:', error);
+            throw error;
+        }
+    }, defaultTimeout);
+});
