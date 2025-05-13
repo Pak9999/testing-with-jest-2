@@ -23,9 +23,8 @@ test('pop on stack with elements returns and removes the top element', () => {
     // Lägger till två element i stacken
     stack.push('first');
     stack.push('second');
-    
-    // Kollar att pop returnerar det översta elementet
+      // Kollar att pop returnerar det översta elementet
     const popped = stack.pop();
-    expect(popped).toBe('second');  
-    expect(stack.peek()).toBe('second'); // Medvetet fel värde för att göra att testet misslyckas
+    expect(popped).toBe('second');
+    expect(stack.peek()).toBe('first');
 });

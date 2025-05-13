@@ -55,14 +55,14 @@ describe('Clicking "Poppa stacken!"', () => {
             // Nu ska vi poppa stacken
             let pop = await driver.findElement(By.id('pop'));
             await pop.click();
-            
-            // kolla att alerten dyker upp och att den innehåller rätt text
+              // kolla att alerten dyker upp och att den innehåller rätt text
             let popAlert = await driver.switchTo().alert();
             let alertText = await popAlert.getText();
             expect(alertText).toContain("Tog bort Äpple");
-            await popAlert.accept();              // Stacken uppdateras inte automatiskt efter pop, så den visar fortfarande det senaste pushade värdet
+            await popAlert.accept();
+              // Stacken uppdateras inte automatiskt efter pop, så den visar fortfarande det senaste pushade värdet
             let stackAfter = await driver.findElement(By.id('top_of_stack')).getText();
-            expect(stackAfter).toEqual("Bananer");  // Medvetet fel värde för att göra att testet misslyckas
+            expect(stackAfter).toEqual("Äpple");
         } catch (error) {
             console.error('Error during "pop button" test:', error);
             throw error;
