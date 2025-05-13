@@ -1,0 +1,23 @@
+{
+  "name": "testing-with-jest-2",
+  "version": "1.0.0",
+  "description": "A Jest + npm lab session",
+  "homepage": "https://github.com/Pak9999/testing-with-jest-2#readme",
+  "bugs": {
+    "url": "https://github.com/Pak9999/testing-with-jest-2/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pak9999/testing-with-jest-2.git"
+  },
+  "license": "MIT",
+  "author": "Pak9999",
+  "type": "commonjs",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest tests"
+  }
+}
