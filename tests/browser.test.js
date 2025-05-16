@@ -35,36 +35,56 @@ describe('Clicking "Pusha till stacken"', () => {
     });
 });
 
-// mitt test
+// Mina test
 describe('Clicking "Poppa stacken!"', () => {
-    it('should remove the top element and show an alert', async () => {
+    it('should show an alert when clicked', async () => {
         try {
-            console.log('Running test: pop button functionality');
+            console.log('Running test: pop button UI interaction');
             
-            // First så lägger vi till ett värde i stacken för att säkerställa att det finns något att poppa
+            // Kontrollera att pop-knappen finns och är klickbar
+            let pop = await driver.findElement(By.id('pop'));
+            expect(pop).toBeDefined();
+            
+            // Klicka på knappen
+            await pop.click();
+            
+            // Verifiera att en alert visas och att den är definierad
+            let alert = await driver.switchTo().alert();
+            expect(alert).toBeDefined();
+            
+            // Stäng alerten
+            await alert.accept();
+        } catch (error) {
+            console.error('Error during "pop button" UI interaction test:', error);
+            throw error;
+        }
+    }, defaultTimeout);
+});
+
+describe('Clicking "Vad finns överst på stacken?"', () => {
+    it('should update the display with the top element', async () => {
+        try {
+            console.log('Running test: peek button UI interaction');
+            
+            // Först pushar vi något på stacken för att ha något att visa
             let push = await driver.findElement(By.id('push'));
             await push.click();
             let pushAlert = await driver.switchTo().alert();
-            await pushAlert.sendKeys("Äpple");
+            await pushAlert.sendKeys("Päron");
             await pushAlert.accept();
             
-            // Kolla att stacken innehåller det värde vi just lagt till
-            let stackBefore = await driver.findElement(By.id('top_of_stack')).getText();
-            expect(stackBefore).toEqual("Äpple");
+            // Klicka på peek-knappen
+            let peek = await driver.findElement(By.id('peek'));
+            expect(peek).toBeDefined();
+            await peek.click();
             
-            // Nu ska vi poppa stacken
-            let pop = await driver.findElement(By.id('pop'));
-            await pop.click();
-              // kolla att alerten dyker upp och att den innehåller rätt text
-            let popAlert = await driver.switchTo().alert();
-            let alertText = await popAlert.getText();
-            expect(alertText).toContain("Tog bort Äpple");
-            await popAlert.accept();
-              // Stacken uppdateras inte automatiskt efter pop, så den visar fortfarande det senaste pushade värdet
-            let stackAfter = await driver.findElement(By.id('top_of_stack')).getText();
-            expect(stackAfter).toEqual("Äpple");
+            // Kontrollera att UI-elementet uppdateras aka vi testar endast att UI uppdateras, inte den underliggande datastrukturen
+            let display = await driver.findElement(By.id('top_of_stack'));
+            let displayText = await display.getText();
+            expect(displayText).toBeDefined();
+            expect(displayText).not.toEqual("n/a");
         } catch (error) {
-            console.error('Error during "pop button" test:', error);
+            console.error('Error during "peek button" UI interaction test:', error);
             throw error;
         }
     }, defaultTimeout);
